@@ -14,13 +14,10 @@ let uncheckedCount = 0;
 
 function newTodo() {
   var li = document.createElement('li');
-  var item = document.createElement('input');  
-  item.setAttribute('type', 'text')
-  item.setAttribute('value', 'New Todo')
-
+  li.className = classNames.TODO_ITEM;
   li.appendChild(createCheckbox());
-  li.appendChild(item);
-  li.appendChild(createClose());
+  li.appendChild(createItem());
+  li.appendChild(createDelete());
   list.appendChild(li);
 
   incrementCount();
@@ -47,10 +44,19 @@ function decrementUncheckCount() {
   uncheckedCountSpan.textContent=uncheckedCount;
 }
 
+function createItem(){
+  var item = document.createElement('input');  
+  item.setAttribute('type', 'text')
+  item.className = classNames.TODO_TEXT;
+  item.placeholder = '"New Todo"'
+  return item;
+}
+
 function createCheckbox() {
   var checkbox = document.createElement('input');
   checkbox.type = 'checkbox';
   checkbox.id = 'todoitem_' + count;
+  checkbox.className = classNames.TODO_CHECKBOX;
   checkbox.onclick = function() {
     if (this.checked === true) {
       decrementUncheckCount();
@@ -61,10 +67,10 @@ function createCheckbox() {
   return checkbox;
 }
 
-function createClose(){
+function createDelete(){
   var span = document.createElement('span');
   var x = document.createTextNode("\u00D7");
-  span.className = "close";
+  span.className = classNames.TODO_DELETE;
   span.onclick = function () {
     var li = this.parentElement;
     li.remove();
